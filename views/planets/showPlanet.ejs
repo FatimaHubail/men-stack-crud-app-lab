@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= planet.name %> Planet</title>
+</head>
+<body>
+    <div class="header-div">
+        <a href="/planets">Back to Planets</a>
+        <h1><%= planet.name %> Planet</h1>
+        <button type="button" id="openEditModal">Edit</button>
+        <form action="/planets/<%= planet._id %>?_method=DELETE" method="post" onsubmit="return confirm('Are you sure you want to delete <%= planet.name %>?');">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+
+    <section class="physical-info">
+        <h2>Physical Characteristics</h2>
+        <ul>
+            <li><strong>Diameter:</strong> <%= planet.diameter %></li>
+            <li><strong>Composition:</strong> <%= planet.composition %></li>
+            <li><strong>Surface Temperature:</strong> <%= planet.surfaceTemperature %>&deg;C</li>
+            <li><strong>Atmosphere:</strong> <%= planet.atmosphere %></li>
+        </ul>
+    </section>
+
+    <section class="orbital-info">
+        <h2>Orbit & Rotation</h2>
+        <ul>
+            <li><strong>Distance from Sun:</strong> <%= planet.distanceFromSun %> million km</li>
+            <li><strong>Rotation Period:</strong> <%= planet.rotationPeriod %> Earth Hours</li>
+        </ul>
+    </section>
+
+    <section class="moons-info">
+        <h2>Moons</h2>
+        <p><strong>Number of Moons:</strong> <%= planet.numOfMoons %></p>
+
+        <% if (planet.moons && planet.moons.length> 0) { %>
+            <ul>
+                <% planet.moons.forEach(function(moon) { %>
+                    <li>
+                        <%= moon %>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No known moons</p>
+        <% } %>
+    </section>
+
+    <section class="discovery-info">
+        <h2>Discovery</h2>
+        <ul>
+            <li><strong>Discovered By:</strong> <%= planet.discoveredBy %></li>
+            <li><strong>Discovery Year:</strong> <%= planet.discoveryYear %></li>
+        </ul>
+    </section>
+</body>
+</html>

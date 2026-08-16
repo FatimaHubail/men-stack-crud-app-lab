@@ -4,13 +4,18 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const Planet = require('./models/planet.js');
 const morgan = require('morgan');
+const path = require('path');
+const override = require('method-override');
+const planetsCtrl = require('./controllers/planetsCtrl.js');
 
 dotenv.config();
 const app = express();
 
 //middleware
 app.use(express.urlencoded({ extended: false }));
+app.use(override('_method'));
 app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // DB connection
 const connect = async () => {
@@ -19,46 +24,15 @@ const connect = async () => {
 }
 connect();
 
-// index route
-app.get('/new', (req, res) => {
-    res.render("index.ejs");
-});
-
-// 'add planet' form route
-app.get('/planets/new', (req, res) => {
-    res.render("planets/new.ejs");
-});
-
-// sending 'add planet' form
-app.post('/planets', async (req, res) => {
-    try {
-        // process boolean data
-        if (req.body.hasMagneticField === "on") {
-            req.body.hasMagneticField = true;
-        } else {
-            req.body.hasMagneticField = false;
-        }
-
-        if (req.body.visitedByProbe === "on") {
-            req.body.visitedByProbe = true;
-        } else {
-            req.body.visitedByProbe = false;
-        }
-
-        // process moons array
-        if (req.body.moons) {
-            req.body.moons = req.body.moons.split(',').map(moon => moon.trim());
-        } else {
-            req.body.moons = [];
-        }
-
-        // creating the planet
-        await Planet.create(req.body);
-        res.redirect("/planets/new");
-    } catch (error) {
-        console.log('error');
-    }
-});
+// routes
+app.get('/', planetsCtrl.home);
+app.get('/planets/new', planetsCtrl.showAddForm);
+app.post('/planets', planetsCtrl.create);
+app.get('/planets', planetsCtrl.allPlanets);
+app.get('/planets/:id', planetsCtrl.show);
+app.get('/planets/:id/edit', planetsCtrl.showEditForm);
+app.put('/planets/:id', planetsCtrl.edit);
+app.delete('/planets/:id', planetsCtrl.deletePlanet);
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');

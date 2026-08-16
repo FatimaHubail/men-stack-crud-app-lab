@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const planetSchema = new mongoose.Schema({
     name: String,
-    Composition: {
+    composition: {
         type: String,
         enum: ['rock', 'gas', 'ice', 'metal']
     },

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planets Page</title>
+</head>
+<body>
+    <div class="header-div">
+        <h1>Milky Way Solar System Planets</h1>
+        <a href="/planets/new">Add Planet</a>
+    </div>
+    <ul>
+        <% planets.forEach(planet => { %>
+            <a href="/planets/<%= planet._id %>">
+                <li><%= planet.name %></li>
+            </a>
+        <%}) %>
+    </ul>
+</body>
+</html>

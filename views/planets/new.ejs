@@ -12,28 +12,28 @@
         <label for="name">Name</label>
         <input type="text" name="name" id="name">
         
-        <label for="Composition">Composition</label>
-        <select name="atmosphere" id="atmosphere">
-            <option value="rock">None</option>
-            <option value="gas">Thin</option>
-            <option value="ice">Thick</option>
-            <option value="metal">Toxic</option>
+        <label for="composition">Composition</label>
+        <select name="composition" id="composition">
+            <option value="rock">Rock</option>
+            <option value="gas">Gas</option>
+            <option value="ice">Ice</option>
+            <option value="metal">Metal</option>
         </select>
 
         <label for="diameter">Diameter</label>
-        <input type="number" name="diameter" id="diameter"> <span>km</span>
+        <input type="number" name="diameter" id="diameter" min="0"> <span>km</span>
 
         <label for="distanceFromSun">Distance from Sun</label>
-        <input type="number" name="distanceFromSun" id="distanceFromSun"> <span>million km</span>
+        <input type="number" name="distanceFromSun" id="distanceFromSun" min="0"> <span>million km</span>
 
         <label for="rotationPeriod">Rotation Period</label>
-        <input type="number" name="rotationPeriod" id="rotationPeriod"> <span>hours</span>
+        <input type="number" name="rotationPeriod" id="rotationPeriod" min="0"> <span>hours</span>
 
         <label for="surfaceTemperature">Surface Temperature</label>
         <input type="number" name="surfaceTemperature" id="surfaceTemperature"> <span>°C</span>
 
         <label for="numOfMoons">Numer of Moons</label>
-        <input type="number" name="numOfMoons" id="numOfMoons">
+        <input type="number" name="numOfMoons" id="numOfMoons" min="0" step="1">
 
         <label for="moons">Moon Names (comma-separated)</label>
         <input type="text" name="moons" id="moons">
@@ -52,7 +52,7 @@
         </select>
 
         <label for="discoveryYear">Discovery Year</label>
-        <input type="number" name="discoveryYear" id="discoveryYear">
+        <input type="number" name="discoveryYear" id="discoveryYear" min="0" step="1">
 
         <label for="discoveredBy">Discovered By</label>
         <input type="text" name="discoveredBy" id="discoveredBy">
@@ -61,6 +61,8 @@
             <label for="visitedByProbe">Visited by Probe</label>
             <input type="checkbox" name="visitedByProbe" id="visitedByProbe">
         </div>
+
+        <button type="submit">Add Planet</button>
     </form>
 </body>
 </html>

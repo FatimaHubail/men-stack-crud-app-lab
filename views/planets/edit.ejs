@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit <%= planet.name %></title>
+</head>
+<body>
+    <a href="/planets/<%= planet._id %>">Back to <%= planet.name %> Planet</a>
+    <h1>Edit <%= planet.name %></h1>
+
+    <form action="/planets/<%= planet._id %>?_method=PUT" method="post">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" value="<%= planet.name %>">
+        
+        <label for="composition">Composition</label>
+        <select name="composition" id="composition">
+            <option value="rock" <%= planet.composition === 'rock' ? 'selected' : '' %>>Rock</option>
+            <option value="gas" <%= planet.composition === 'gas' ? 'selected' : '' %>>Gas</option>
+            <option value="ice" <%= planet.composition === 'ice' ? 'selected' : '' %>>Ice</option>
+            <option value="metal" <%= planet.composition === 'metal' ? 'selected' : '' %>>Metal</option>
+        </select>
+
+        <label for="diameter">Diameter</label>
+        <input type="number" name="diameter" id="diameter" min="0" value="<%= planet.diameter %>"> <span>km</span>
+
+        <label for="distanceFromSun">Distance from Sun</label>
+        <input type="number" name="distanceFromSun" id="distanceFromSun" min="0" value="<%= planet.distanceFromSun %>"> <span>million km</span>
+
+        <label for="rotationPeriod">Rotation Period</label>
+        <input type="number" name="rotationPeriod" id="rotationPeriod" min="0" value="<%= planet.rotationPeriod %>"> <span>hours</span>
+
+        <label for="surfaceTemperature">Surface Temperature</label>
+        <input type="number" name="surfaceTemperature" id="surfaceTemperature" value="<%= planet.surfaceTemperature %>"> <span>°C</span>
+
+        <label for="numOfMoons">Numer of Moons</label>
+        <input type="number" name="numOfMoons" id="numOfMoons" min="0" step="1" value="<%= planet.numOfMoons %>">
+
+        <label for="moons">Moon Names (comma-separated)</label>
+        <input type="text" name="moons" id="moons" value="<%= planet.moons ? planet.moons.join(', ') : '' %>">
+
+        <div class="checkbox-div">
+            <label for="hasMagneticField">Has Magnetic Field?</label>
+            <input type="checkbox" name="hasMagneticField" id="hasMagneticField" <%= planet.hasMagneticField ? 'checked' : '' %>>
+        </div>
+
+        <label for="atmosphere">Atmosphere</label>
+        <select name="atmosphere" id="atmosphere">
+            <option value="none" <%= planet.atmosphere === 'none' ? 'selected' : '' %>>None</option>
+            <option value="thin" <%= planet.atmosphere === 'thin' ? 'selected' : '' %>>Thin</option>
+            <option value="thick" <%= planet.atmosphere === 'thick' ? 'selected' : '' %>>Thick</option>
+            <option value="toxic" <%= planet.atmosphere === 'toxic' ? 'selected' : '' %>>Toxic</option>
+        </select>
+
+        <label for="discoveryYear">Discovery Year</label>
+        <input type="number" name="discoveryYear" id="discoveryYear" min="0" step="1" value="<%= planet.discoveryYear %>">
+
+        <label for="discoveredBy">Discovered By</label>
+        <input type="text" name="discoveredBy" id="discoveredBy" value="<%= planet.discoveredBy %>">
+
+        <div class="checkbox-div">
+            <label for="visitedByProbe">Visited by Probe</label>
+            <input type="checkbox" name="visitedByProbe" id="visitedByProbe" <%= planet.visitedByProbe ? 'checked' : '' %>>
+        </div>
+
+        <button type="submit">Edit Planet</button>
+    </form>
+</body>
+</html>
