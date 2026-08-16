@@ -12,9 +12,9 @@
     </div>
     <ul>
         <% planets.forEach(planet => { %>
-            <a href="/planets/<%= planet._id %>">
-                <li><%= planet.name %></li>
-            </a>
+            <li>
+                <a href="/planets/<%= planet._id %>"><%= planet.name %></a>
+            </li>
         <%}) %>
     </ul>
 </body>

@@ -1,5 +1,30 @@
 const Planet = require('../models/planet');
 
+// process boolean and moons fields of the create/edit forms
+const processPlanetBody = (body) => {
+     // process boolean data
+    if (body.hasMagneticField === "on") {
+        body.hasMagneticField = true;
+    } else {
+        body.hasMagneticField = false;
+    }
+
+    if (body.visitedByProbe === "on") {
+        body.visitedByProbe = true;
+    } else {
+        body.visitedByProbe = false;
+    }
+
+    // process moons array
+    if (body.moons) {
+        body.moons = body.moons.split(',').map(moon => moon.trim()).filter(moon => moon !== "");
+    } else {
+        body.moons = [];
+    }
+
+    return body;
+};
+
 // home route
 const home = async (req, res) => {
     res.render("index.ejs");
@@ -13,31 +38,14 @@ const showAddForm = (req, res) => {
 // sending 'add planet' form
 const create = async (req, res) => {
     try {
-        // process boolean data
-        if (req.body.hasMagneticField === "on") {
-            req.body.hasMagneticField = true;
-        } else {
-            req.body.hasMagneticField = false;
-        }
-
-        if (req.body.visitedByProbe === "on") {
-            req.body.visitedByProbe = true;
-        } else {
-            req.body.visitedByProbe = false;
-        }
-
-        // process moons array
-        if (req.body.moons) {
-            req.body.moons = req.body.moons.split(',').map(moon => moon.trim());
-        } else {
-            req.body.moons = [];
-        }
+        const planetData = processPlanetBody(req.body);
 
         // creating the planet
-        await Planet.create(req.body);
-        res.redirect("/planets/new");
+        const newPlanet = await Planet.create(planetData);
+        res.redirect(`/planets/${newPlanet._id}`);
     } catch (error) {
-        console.log('error');
+        console.log(error);
+        res.send('Failed to create planet.');
     }
 };
 
@@ -59,7 +67,7 @@ const show = async (req, res) => {
         res.render("planets/showPlanet.ejs", { planet });
     } catch (error) {
         console.log(error);
-        console.log('failed to fetch the planet');
+        res.send('failed to fetch the planet');
     }
 };
 
@@ -70,36 +78,19 @@ const showEditForm = async (req, res) => {
         res.render("planets/edit.ejs", { planet });
     } catch (error) {
         console.log(error);
-        console.log('failed to fetch the planet');
+        res.send('failed to fetch the planet');
     }
 };
 
 // edit planet data route
 const edit = async (req, res) => {
     try {
-        if (req.body.hasMagneticField === "on") {
-            req.body.hasMagneticField = true;
-        } else {
-            req.body.hasMagneticField = false;
-        }
-
-        if (req.body.visitedByProbe === "on") {
-            req.body.visitedByProbe = true;
-        } else {
-            req.body.visitedByProbe = false;
-        }
-
-        if (req.body.moons) {
-            req.body.moons = req.body.moons.split(',').map(moon => moon.trim());
-        } else {
-            req.body.moons = [];
-        }
-
-        const planet = await Planet.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
+        const planetData = processPlanetBody(req.body);
+        const planet = await Planet.findByIdAndUpdate(req.params.id, planetData);
         res.redirect(`/planets/${planet._id}`);
     } catch (error) {
         console.log(error);
-        console.log('failed to update the planet');
+        res.send('failed to update the planet');
     }
 };
 
@@ -110,7 +101,7 @@ const deletePlanet = async (req, res) => {
         res.redirect("/planets");
     } catch (error) {
         console.log(error);
-        console.log('failed to delete the planet');
+        res.send('failed to delete the planet');
     }
 };
 

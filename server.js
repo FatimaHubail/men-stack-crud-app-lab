@@ -1,8 +1,6 @@
 const express = require('express');
-const ejs = require('ejs');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-const Planet = require('./models/planet.js');
 const morgan = require('morgan');
 const path = require('path');
 const override = require('method-override');
@@ -34,6 +32,7 @@ app.get('/planets/:id/edit', planetsCtrl.showEditForm);
 app.put('/planets/:id', planetsCtrl.edit);
 app.delete('/planets/:id', planetsCtrl.deletePlanet);
 
-app.listen(3000, () => {
-    console.log('Listening on port 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
 });

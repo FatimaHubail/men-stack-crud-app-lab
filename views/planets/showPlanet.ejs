@@ -9,7 +9,7 @@
     <div class="header-div">
         <a href="/planets">Back to Planets</a>
         <h1><%= planet.name %> Planet</h1>
-        <button type="button" id="openEditModal">Edit</button>
+        <a href="/planets/<%= planet._id %>/edit">Edit</a>
         <form action="/planets/<%= planet._id %>?_method=DELETE" method="post" onsubmit="return confirm('Are you sure you want to delete <%= planet.name %>?');">
             <button type="submit">Delete</button>
         </form>
@@ -22,6 +22,7 @@
             <li><strong>Composition:</strong> <%= planet.composition %></li>
             <li><strong>Surface Temperature:</strong> <%= planet.surfaceTemperature %>&deg;C</li>
             <li><strong>Atmosphere:</strong> <%= planet.atmosphere %></li>
+            <li><strong>Has Magnetic Field:</strong> <%= planet.hasMagneticField ? 'Yes' : 'No' %></li>
         </ul>
     </section>
 
@@ -55,6 +56,7 @@
         <ul>
             <li><strong>Discovered By:</strong> <%= planet.discoveredBy %></li>
             <li><strong>Discovery Year:</strong> <%= planet.discoveryYear %></li>
+            <li><strong>Visited by Probe:</strong> <%= planet.visitedByProbe ? 'Yes' : 'No' %></li>
         </ul>
     </section>
 </body>
