@@ -4,18 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planets Page</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    <div class="header-div">
-        <h1>Milky Way Solar System Planets</h1>
-        <a href="/planets/new">Add Planet</a>
+    <div class="page-container">
+        <div class="header-div">
+            <div>
+                <span class="eyebrow">Milky Way Galaxy</span>
+                <h1>Solar System Planets</h1>
+            </div>
+            <div class="header-actions">
+                <a href="/" class="btn">&larr; Home</a>
+                <a href="/planets/new" class="btn btn-primary">Add Planet</a>
+            </div>
+        </div>
+
+        <% if (planets.length > 0) { %>
+            <ul class="planet-grid">
+                <% planets.forEach(planet => { %>
+                    <li class="planet-card planet-<%= planet.name.toLowerCase() %>">
+                        <a href="/planets/<%= planet._id %>">
+                            <span class="planet-name"><%= planet.name %></span>
+                            <span class="planet-type"><%= planet.composition %></span>
+                        </a>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <p class="empty-state">No planets charted yet. Add the first one.</p>
+        <% } %>
     </div>
-    <ul>
-        <% planets.forEach(planet => { %>
-            <li>
-                <a href="/planets/<%= planet._id %>"><%= planet.name %></a>
-            </li>
-        <%}) %>
-    </ul>
 </body>
 </html>

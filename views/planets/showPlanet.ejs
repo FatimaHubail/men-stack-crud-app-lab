@@ -1,63 +1,72 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= planet.name %> Planet</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    <div class="header-div">
-        <a href="/planets">Back to Planets</a>
-        <h1><%= planet.name %> Planet</h1>
-        <a href="/planets/<%= planet._id %>/edit">Edit</a>
-        <form action="/planets/<%= planet._id %>?_method=DELETE" method="post" onsubmit="return confirm('Are you sure you want to delete <%= planet.name %>?');">
-            <button type="submit">Delete</button>
-        </form>
-    </div>
+    <div class="page-container">
+        <div class="header-div">
+            <a href="/planets">&larr; Back to Planets</a>
+        </div>
 
-    <section class="physical-info">
-        <h2>Physical Characteristics</h2>
-        <ul>
-            <li><strong>Diameter:</strong> <%= planet.diameter %></li>
-            <li><strong>Composition:</strong> <%= planet.composition %></li>
-            <li><strong>Surface Temperature:</strong> <%= planet.surfaceTemperature %>&deg;C</li>
-            <li><strong>Atmosphere:</strong> <%= planet.atmosphere %></li>
-            <li><strong>Has Magnetic Field:</strong> <%= planet.hasMagneticField ? 'Yes' : 'No' %></li>
-        </ul>
-    </section>
+        <div class="planet-header comp-<%= planet.composition %>">
+            <h1><%= planet.name %></h1>
+            <p class="type-badge"><%= planet.composition %></p>
+        </div>
 
-    <section class="orbital-info">
-        <h2>Orbit & Rotation</h2>
-        <ul>
-            <li><strong>Distance from Sun:</strong> <%= planet.distanceFromSun %> million km</li>
-            <li><strong>Rotation Period:</strong> <%= planet.rotationPeriod %> Earth Hours</li>
-        </ul>
-    </section>
-
-    <section class="moons-info">
-        <h2>Moons</h2>
-        <p><strong>Number of Moons:</strong> <%= planet.numOfMoons %></p>
-
-        <% if (planet.moons && planet.moons.length> 0) { %>
+        <section class="physical-info">
+            <h2>Physical Characteristics</h2>
             <ul>
-                <% planet.moons.forEach(function(moon) { %>
-                    <li>
-                        <%= moon %>
-                    </li>
-                <% }); %>
+                <li><strong>Diameter</strong> <span class="data-value"><%= planet.diameter %><span class="unit">km</span></span></li>
+                <li><strong>Composition</strong> <span class="data-value"><%= planet.composition %></span></li>
+                <li><strong>Surface Temperature</strong> <span class="data-value"><%= planet.surfaceTemperature %><span class="unit">&deg;C</span></span></li>
+                <li><strong>Atmosphere</strong> <span class="data-value"><%= planet.atmosphere %></span></li>
+                <li><strong>Has Magnetic Field</strong> <span class="data-value"><%= planet.hasMagneticField ? 'Yes' : 'No' %></span></li>
             </ul>
-        <% } else { %>
-            <p>No known moons</p>
-        <% } %>
-    </section>
+        </section>
 
-    <section class="discovery-info">
-        <h2>Discovery</h2>
-        <ul>
-            <li><strong>Discovered By:</strong> <%= planet.discoveredBy %></li>
-            <li><strong>Discovery Year:</strong> <%= planet.discoveryYear %></li>
-            <li><strong>Visited by Probe:</strong> <%= planet.visitedByProbe ? 'Yes' : 'No' %></li>
-        </ul>
-    </section>
+        <section class="orbital-info">
+            <h2>Orbit &amp; Rotation</h2>
+            <ul>
+                <li><strong>Distance from Sun</strong> <span class="data-value"><%= planet.distanceFromSun %><span class="unit">million km</span></span></li>
+                <li><strong>Rotation Period</strong> <span class="data-value"><%= planet.rotationPeriod %><span class="unit">hrs</span></span></li>
+            </ul>
+        </section>
+
+        <section class="moons-info">
+            <h2>Moons</h2>
+            <p><strong>Number of Moons</strong> <span class="data-value"><%= planet.numOfMoons %></span></p>
+
+            <% if (planet.moons && planet.moons.length > 0) { %>
+                <div class="moon-list">
+                    <% planet.moons.forEach(function(moon) { %>
+                        <span class="moon-chip"><%= moon %></span>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <p class="empty-state">No known moons</p>
+            <% } %>
+        </section>
+
+        <section class="discovery-info">
+            <h2>Discovery</h2>
+            <ul>
+                <li><strong>Discovered By</strong> <span class="data-value"><%= planet.discoveredBy %></span></li>
+                <li><strong>Discovery Year</strong> <span class="data-value"><%= planet.discoveryYear %></span></li>
+                <li><strong>Visited by Probe</strong> <span class="data-value"><%= planet.visitedByProbe ? 'Yes' : 'No' %></span></li>
+            </ul>
+        </section>
+
+        <div class="actions">
+            <a href="/planets/<%= planet._id %>/edit" class="btn">Edit</a>
+            <form action="/planets/<%= planet._id %>?_method=DELETE" method="post" onsubmit="return confirm('Are you sure you want to delete <%= planet.name %>?');">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
